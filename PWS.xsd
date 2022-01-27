@@ -12,7 +12,7 @@
   </xs:simpleType>
 
   <xs:complextype name="gradColourType">
-    <xs:attribute name="grad_type" type="xs:string"/>
+    <xs:attribute name="grad_type" type="xs:string" use="optional"/>
     <xs:attribute name="grad_offset" type="xs:decimal"/>
     <xs:assert test="@grad_offset le 100"/>
     <xs:assert test="@grad_offset ge -100"/>
@@ -21,21 +21,24 @@
       <xs:element name="colour2" type="hexColourType"/>
     </xs:sequence>
   </xs:complextype>
-    
+  
   <xs:complextype name="colourType">
     <xs:choice>
       <xs:element name="flat" type="hexColourType"/>
       <xs:element name="grad" type="gradColourType"/>
+      <xs:any minOccurs="0"/>
     </xs:choice>
   </xs:complextype>
-    
+  
   <xs:complexType name="visualType">
+    <xs:attribute name="name" type="xs:string"/>
     <xs:attribute name="xstart" type="xs:int" use="optional"/>
     <xs:attribute name="ystart" type="xs:int" use="optional"/>
-    <xs:attribute name="xsize_px" type="xs:float" use="optional"/>
-    <xs:attribute name="ysize_px" type="xs:float" use="optional"/>
+    <xs:attribute name="xsize" type="xs:float" use="optional"/>
+    <xs:attribute name="ysize" type="xs:float" use="optional"/>
     <xs:attribute name="bg_colour" type="colourType" use="optional"/>
     <xs:attribute name="colour" type="colourType" use="optional"/>
+    <xs:anyAttribute/>
   </xs:complexType>
 
   
@@ -48,10 +51,10 @@
     
     <xs:complexType>
       <xs:all>
-	<element name="author" maxOccurs="1" type="string"/>
-	<element name="version" maxOccurs="1" type="string"/>
-	<element minOccurs="0" maxOccurs="1" name="comment" type="string"/>
-	<xsd:any minOccurs="0"/>
+	<xs:element name="author" minOccurs="0" maxOccurs="1" type="string"/>
+	<xs:element name="version" minOccurs="0" maxOccurs="1" type="string"/>
+	<xs:element minOccurs="0" maxOccurs="1" name="comment" type="string"/>
+	<xs:any minOccurs="0"/>
       </xs:all>
     </xs:complexType>
   </xs:element>
@@ -61,53 +64,49 @@
       <xs:sequence>
 	<xs:any minOccurs="0"/>
 	<xs:element maxOccurs="unbounded" name="visualBase">
-	  <xs:sequence minOccurs="0" maxOccurs="unbounded">
-	    <xs:annotation>
-              <xs:documentation>
-		Base visual object for presentation.
-              </xs:documentation>
-            </xs:annotation>
-	    
-	    <xs:attribute name="name" type="string">
-              <xs:annotation>
-		<xs:documentation>
-                  Object name.
-		</xs:documentation>
-              </xs:annotation>
-            </xs:attribute>
-	    
-            <xs:element name="text">
-              <xs:complexType mixed="true">
-		<xs:annotation>
-		  <documentation>
-                    Text to be displayed.
-		  </documentation>
-		</xs:annotation>
-		<xs:sequence>
-		  <xs:attribute name="font" type="xs:string"/>
-		  <xs:attribute name="fontsize" type="xs:string"/>
-		  <xs:attribute name="fontcolor" type="xs:string"/>
-		  <xs:choice minOccurs="0" maxOccurs="unbounded">
-		    <xs:element name="bold" type="xs:boolean"/>
-		    <xs:element name="italic" type="xs:boolean"/>
-		    <xs:element name="link" type="xs:string">
-		      <xs:attribute name="ref" type="xs:string"/>
-		      <xs:attribute name="ref_type">
-			<xs:simpleType>
-			  <xs:restriction base="xs:string">
-			    <xs:enumeration value="internal"/>
-			    <xs:enumeration value="external"/>
-			  </xs:restriction>
-			</xs:simpleType>
-		      </xs:attribute>
-		  </xs:choice>
+	  <xs:complexType>
+	    <xs:complexContent>
+	      <xs:extension base="visualType">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+		  <xs:annotation>
+		    <xs:documentation>
+		      Base visual object for presentation (i.e a slide).
+		    </xs:documentation>
+		  </xs:annotation>
 		  
+		  <xs:element name="text">
+		    <xs:complexType mixed="true">
+		      <xs:annotation>
+			<documentation>
+			  Text to be displayed.
+			</documentation>
+		      </xs:annotation>
+		      <xs:sequence>
+			<xs:attribute name="font" type="xs:string"/>
+			<xs:attribute name="fontsize" type="xs:string"/>
+			<xs:attribute name="fontcolor" type="xs:string"/>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+			  <xs:element name="bold" type="xs:boolean"/>
+			  <xs:element name="italic" type="xs:boolean"/>
+			  <xs:element name="link" type="xs:string">
+			    <xs:attribute name="ref" type="xs:string"/>
+			    <xs:attribute name="ref_type">
+			      <xs:simpleType>
+				<xs:restriction base="xs:string">
+				  <xs:enumeration value="internal"/>
+				  <xs:enumeration value="external"/>
+				</xs:restriction>
+			      </xs:simpleType>
+			    </xs:attribute>
+			  </xs:element>
+			</xs:choice>
+			
+		      </xs:sequence>
+		    </xs:complexType>
+		  </xs:element>
 		</xs:sequence>
-	      </xs:complexType>
-            </xs:element>
-	  </xs:sequence>
+	      </xs:element>
+	    </xs:sequence>
+	  </xs:complexType>
 	</xs:element>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-</xs:schema>
+      </xs:schema>
