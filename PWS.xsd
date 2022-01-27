@@ -1,5 +1,44 @@
-<?xml version="1.0"?>
+<?xml version="1.1"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:simpleType name="hexColourType">
+    <xs:union memberTypes="xs:NMTOKEN">
+      <xs:simpleType>
+	<xs:restriction base="xs:token">
+	  <xs:pattern value="#[0-9a-fA-F]{6}"/>
+	</xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+
+  <xs:complextype name="gradColourType">
+    <xs:attribute name="grad_type" type="xs:string"/>
+    <xs:attribute name="grad_offset" type="xs:decimal"/>
+    <xs:assert test="@grad_offset le 100"/>
+    <xs:assert test="@grad_offset ge -100"/>
+    <xs:sequence>
+      <xs:element name="colour1" type="hexColourType"/>
+      <xs:element name="colour2" type="hexColourType"/>
+    </xs:sequence>
+  </xs:complextype>
+    
+  <xs:complextype name="colourType">
+    <xs:choice>
+      <xs:element name="flat" type="hexColourType"/>
+      <xs:element name="grad" type="gradColourType"/>
+    </xs:choice>
+  </xs:complextype>
+    
+  <xs:complexType name="visualObjectType">
+    <xs:attribute name="xstart" type="xs:int" use="optional"/>
+    <xs:attribute name="ystart" type="xs:int" use="optional"/>
+    <xs:attribute name="xsize_px" type="xs:float" use="optional"/>
+    <xs:attribute name="ysize_px" type="xs:float" use="optional"/>
+    <xs:attribute name="bg_colour" type="colourType" use="optional"/>
+    <xs:attribute name="colour" type="colourType" use="optional"/>
+  </xs:complexType>
+
+  
   <xs:element name="metadata">
     <xs:annotation>
       <xs:documenation>
@@ -37,37 +76,36 @@
 		</xs:documentation>
               </xs:annotation>
             </xs:attribute>
-            
-            <xs:element name="text" type="string">
+	    
+            <xs:element name="text">
+              <xs:complexType mixed="true">
 		<xs:annotation>
 		  <documentation>
-                    Text to be displayed
+                    Text to be displayed.
 		  </documentation>
 		</xs:annotation>
-		<xs:type>
-		  <attribute name="font" type="string"/>
-		  <attribute name="fontsize" type="string"/>
-		  <attribute name="fontcolor" type="string"/>
-		  <attribute name="xstart" type="int"/>
-		  <attribute name="ystart" type="int"/>
-		  <attribute name="starttime" type="int"/>
-		  <attribute name="endtime" type="int"/>
-		  <element name="b" type="string">
-                    <annotation>
-                      <info>
-			Encapsulates bold text
-                      </info>
-                    </annotation>
-		  </element>
-		  <element name="i" type="string">
-                    <annotation>
-                      <info>
-			Encapsulates italicised text
-                      </info>
-                    </annotation>
-		  </element>
-		</type>
-              </element>
+		<xs:sequence>
+		  <xs:attribute name="font" type="xs:string"/>
+		  <xs:attribute name="fontsize" type="xs:string"/>
+		  <xs:attribute name="fontcolor" type="xs:string"/>
+		  <xs:choice minOccurs="0" maxOccurs="unbounded">
+		    <xs:element name="bold" type="xs:boolean"/>
+		    <xs:element name="italic" type="xs:boolean"/>
+		    <xs:element name="link" type="xs:string">
+		      <xs:attribute name="ref" type="xs:string"/>
+		      <xs:attribute name="ref_type">
+			<xs:simpleType>
+			  <xs:restriction base="xs:string">
+			    <xs:enumeration value="internal"/>
+			    <xs:enumeration value="external"/>
+			  </xs:restriction>
+			</xs:simpleType>
+		      </xs:attribute>
+		  </xs:choice>
+		  
+		</xs:sequence>
+	      </xs:complexType>
+            </xs:element>
               <element name="line">
 		<annotation>
 		  <info>
