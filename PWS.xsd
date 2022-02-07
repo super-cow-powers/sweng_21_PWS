@@ -1,17 +1,17 @@
 <?xml version="1.1" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-  <xs:simpleType name="percentType">
+  <xs:attributeGroup name="metadataAttrs">
     <xs:annotation>
       <xs:documenation>
-       Generic type for 0-100 percentages
+        Metadata attribute group. Requires (at minimum) author and version
       </xs:documenation>
     </xs:annotation>
-    <xs:restriction base="xs:double">
-      <xs:minInclusive value="0"/>
-      <xs:maxInclusive value="100"/>
-    </xs:restriction>
-  </xs:simpleType>
+    <xs:attribute name="author" type="xs:string" use="optional"/>
+    <xs:attribute name="version" type="xs:string" use="optional"/>
+    <xs:attribute name="comment" type="xs:string" use="optional"/>
+  </xs:attributeGroup>
+  
   
   <xs:attributeGroup name="locAttrs">
     <xs:annotation>
@@ -50,6 +50,18 @@
       </xs:simpleType>
     </xs:attribute>
   </xs:attributeGroup>
+  
+  <xs:simpleType name="percentType">
+    <xs:annotation>
+      <xs:documenation>
+       Generic type for 0-100 percentages
+      </xs:documenation>
+    </xs:annotation>
+    <xs:restriction base="xs:double">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
   
   <xs:simpleType name="hexColourType">
     <xs:annotation>
@@ -102,15 +114,18 @@
     </xs:annotation>
     <xs:attributeGroup ref="locAttrs"/>
     <xs:attributeGroup ref="sizeAttrs"/>
-    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="name" type="xs:ID"/><!-- Globally Unique -->
     <xs:attribute name="disp_duration_s" type="xs:double" use="optional"/>
     <xs:attribute name="show_after_s" type="xs:double" use="optional"/>
     <xs:attribute name="fill_colour" type="colourType" use="optional"/>
     <xs:sequence minOccurs="0">
+      <!-- possibly a poor choice - anything extending visualType will be able to use any valid element  -->
+      <xs:any minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="shading" minOccurs="0">
 	<xs:annotation>
 	  <xs:documentation>
-	     basic_shading should add shade all around object. Extend for more complex shading.
+	    basic_shading should add shade all around object.
+	    Extend with other choice element to define more complex effects.
 	  </xs:documentation>
 	</xs:annotation>
 	<xs:complexType>
@@ -125,7 +140,6 @@
 	  </xs:choice>
 	</xs:complexType>
       </xs:element>
-      <xs:any minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   
@@ -207,11 +221,9 @@
 	<xs:attribute name="display_player" type="xs:boolean" use="optional"/>
 	<xs:attribute name="seek_offset" type="xs:double" use="optional" />
 	<xs:attribute name="autoplay" type="xs:boolean" use="optional"/>
+	<xs:attribute name="loop" type="xs:boolean" use="optional"/>
 	<xs:anyAttribute/>
       </xs:complexContent>
-      <xs:sequence minOccurs="0">
-	<xs:any minOccurs="0"/>
-      </xs:sequence>
     </xs:extension>
   </xs:complexType>
 
@@ -243,34 +255,24 @@
 	    <xs:element name="image" type="imageType"/>
 	    <xs:element name="playable" type="playableType"/>
 	  </xs:choice>
-	  <xs:any minOccurs="0"/>
 	</xs:sequence>
       </xs:complexContent>
     </xs:extension>
   </xs:complexType>
   
-  <xs:element name="metadata">
+  <xs:element name="document">
     <xs:annotation>
       <xs:documenation>
-        Metadata section. Contains (at minimum) author and version
+        Top-level visual document
       </xs:documenation>
     </xs:annotation>
     <xs:complexType>
-      <xs:all>
-	<xs:element name="author" minOccurs="0" maxOccurs="1" type="string"/>
-	<xs:element name="version" minOccurs="0" maxOccurs="1" type="string"/>
-	<xs:element minOccurs="0" maxOccurs="1" name="comment" type="string"/>
-	<xs:any minOccurs="0"/>
-      </xs:all>
-    </xs:complexType>
-  </xs:element>
-  
-  <xs:element name="document">
-    <xs:complexType>
+      <xs:attributeGroup ref="metadataAttrs"/>
       <xs:anyAttribute/>
       <xs:sequence>
+	<xs:element name="title" type="xs:string" minOccurs="0" maxOccurs="1"/>
 	<xs:element name="page" minOccurs="0" maxOccurs="unbounded" type="pageType">
-	<xs:any minOccurs="0"/>
+	<xs:any minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
