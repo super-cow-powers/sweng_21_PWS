@@ -7,6 +7,7 @@
         Metadata attribute group. Requires (at minimum) author and version
       </xs:documenation>
     </xs:annotation>
+    <xs:attribute name="title" type="xs:string" use="optional"/>
     <xs:attribute name="author" type="xs:string" use="optional"/>
     <xs:attribute name="version" type="xs:string" use="optional"/>
     <xs:attribute name="comment" type="xs:string" use="optional"/>
@@ -270,7 +271,6 @@
       <xs:attributeGroup ref="metadataAttrs"/>
       <xs:anyAttribute/>
       <xs:sequence>
-	<xs:element name="title" type="xs:string" minOccurs="0" maxOccurs="1"/>
 	<xs:element name="page" minOccurs="0" maxOccurs="unbounded" type="pageType">
 	<xs:any minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
