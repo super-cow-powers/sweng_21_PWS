@@ -1,6 +1,34 @@
-<?xml version="1.0" encoding="utf-8"?>
-<?xml version="1.1"?>
+<?xml version="1.1" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:attributeGroup name="locAttrs">
+    <xs:attribute name="x_orig" type="xs:double"/>
+    <xs:attribute name="y_orig" type="xs:double"/>
+    <xs:attribute name="z_ind" type="xs:integer" use="optional"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="sizeAttrs">
+    <xs:attribute name="x_px" type="xs:double"/>
+    <xs:attribute name="y_px" type="xs:double"/>
+    <xs:attribute name="rot_angle" type="xs:double"/>
+  </xs:attributeGroup>
+ 
+  <xs:attributeGroup name="hrefAttrs">
+    <xs:attribute name="target" type="xs:string"/>
+    <xs:attribute name="type">
+      <xs:simpleType>
+	<xs:restriction base="xs:token">
+	  <xs:enumeration value="internal"/>
+	  <xs:enumeration value="external"/>
+	</xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  
+  <xs:attributeGroup name="visualAttrs">
+    <xs:attributeGroup ref="locAttrs"/>
+    <xs:attributeGroup ref="sizeAttrs"/>
+    <xs:attribute name="name" type="xs:string"/>
+  </xs:attributeGroup>
 
   <xs:simpleType name="hexColourType">
     <xs:union memberTypes="xs:NMTOKEN">
@@ -24,27 +52,63 @@
   </xs:complextype>
   
   <xs:complextype name="colourType">
+    <xs:attribute name="alpha" type="xs:float"/>
     <xs:choice>
       <xs:element name="flat" type="hexColourType"/>
       <xs:element name="grad" type="gradColourType"/>
       <xs:any minOccurs="0"/>
     </xs:choice>
   </xs:complextype>
-  
-  <xs:complexType name="visualType">
-    <xs:attribute name="name" type="xs:string"/>
-    <xs:attribute name="xstart" type="xs:int" use="optional"/>
-    <xs:attribute name="ystart" type="xs:int" use="optional"/>
-    <xs:attribute name="xsize" type="xs:float" use="optional"/>
-    <xs:attribute name="ysize" type="xs:float" use="optional"/>
-    <xs:attribute name="bg_colour" type="colourType" use="optional"/>
-    <xs:attribute name="colour" type="colourType" use="optional"/>
-    <xs:anyAttribute/>
+
+  <xs:complexType name="textType" mixed="true">
+    <xs:attribute name="font" type="xs:string"/>
+    <xs:attribute name="fontsize" type="xs:double"/>
+    <xs:attribute name="fontcolor" type="colourType"/>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+	<xs:element name="bold" type="xs:string"/>
+	<xs:element name="italic" type="xs:string"/>
+	<xs:element name="href" type="xs:string">
+	  <xs:attributeGroup ref="hrefAttrs"/>
+	</xs:element>
+      </xs:choice>
+    </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="page">
-    <xs:attribute name="name">
+  <xs:complexType name="strokeType">
+    <xs:attribute name="width" type="xs:double"/>
+    <xs:attribute name="colour" type="colourType"/>
+    <xs:anyAttribute/>
+  </xs:complexType>
   
+  <xs:complexType name="shapeType">
+    <xs:attributeGroup ref="visualAttrs"/>
+    <xs:attribute name="x_end" type="xs:double" use="optional"/>
+    <xs:attribute name="y_end" type="xs:double" use="optional"/>
+    <xs:attribute name="type">
+      <xs:simpleType type="xs:token">
+	<xs:annotation>
+	  <xs:documentation>
+	    Applications should interpret at least:
+	    "circle"
+	    "line" (with use of x/y_end)
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:all minOccurs="0">
+      <xs:element name="text" type="textType"/>
+      <xs:element name="stroke" type="strokeType"/>
+      <xs:element name="href" type="xs:string">
+	<xs:attributeGroup ref="hrefAttrs"/>
+      </xs:element>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="drawingContainerType">
+    
+  </xs:complexType>
+
   <xs:element name="metadata">
     <xs:annotation>
       <xs:documenation>
@@ -65,62 +129,62 @@
   <xs:element name="document">
     <xs:complexType>
       <xs:sequence>
-	
+
       </xs:sequence>
     </xs:complexType>
   </xs:element>
 </xs:schema>
-  <!--
-  <xs:element name="presentation">
+<!--
+    <xs:element name="presentation">
     <xs:complexType>
-      <xs:sequence>
-	<xs:any minOccurs="0"/>
-	<xs:element maxOccurs="unbounded" name="visualBase">
-	  <xs:complexType>
-	    <xs:complexContent>
-	      <xs:extension base="visualType">
-		<xs:sequence minOccurs="0" maxOccurs="unbounded">
-		  <xs:annotation>
-		    <xs:documentation>
-		      Base visual object for presentation (i.e a slide).
-		    </xs:documentation>
-		  </xs:annotation>
-		  
-		  <xs:element name="text">
-		    <xs:complexType mixed="true">
-		      <xs:annotation>
-			<documentation>
-			  Text to be displayed.
-			</documentation>
-		      </xs:annotation>
-		      <xs:sequence>
-			<xs:attribute name="font" type="xs:string"/>
-			<xs:attribute name="fontsize" type="xs:string"/>
-			<xs:attribute name="fontcolor" type="xs:string"/>
-			<xs:choice minOccurs="0" maxOccurs="unbounded">
-			  <xs:element name="bold" type="xs:boolean"/>
-			  <xs:element name="italic" type="xs:boolean"/>
-			  <xs:element name="link" type="xs:string">
-			    <xs:attribute name="ref" type="xs:string"/>
-			    <xs:attribute name="ref_type">
-			      <xs:simpleType>
-				<xs:restriction base="xs:string">
-				  <xs:enumeration value="internal"/>
-				  <xs:enumeration value="external"/>
-				</xs:restriction>
-			      </xs:simpleType>
-			    </xs:attribute>
-			  </xs:element>
-			</xs:choice>
-			
-		      </xs:sequence>
-		    </xs:complexType>
-		  </xs:element>
-		</xs:sequence>
-	      
-	      </xs:element>
-	    </xs:sequence>
-	  </xs:complexType>
-	</xs:element>
-      </xs:schema>
+    <xs:sequence>
+    <xs:any minOccurs="0"/>
+    <xs:element maxOccurs="unbounded" name="visualBase">
+    <xs:complexType>
+    <xs:complexContent>
+    <xs:extension base="visualType">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+    <xs:annotation>
+    <xs:documentation>
+    Base visual object for presentation (i.e a slide).
+    </xs:documentation>
+    </xs:annotation>
+    
+    <xs:element name="text">
+    <xs:complexType mixed="true">
+    <xs:annotation>
+    <documentation>
+    Text to be displayed.
+    </documentation>
+    </xs:annotation>
+    <xs:sequence>
+    <xs:attribute name="font" type="xs:string"/>
+    <xs:attribute name="fontsize" type="xs:string"/>
+    <xs:attribute name="fontcolor" type="xs:string"/>
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+    <xs:element name="bold" type="xs:boolean"/>
+    <xs:element name="italic" type="xs:boolean"/>
+    <xs:element name="link" type="xs:string">
+    <xs:attribute name="ref" type="xs:string"/>
+    <xs:attribute name="ref_type">
+    <xs:simpleType>
+    <xs:restriction base="xs:string">
+    <xs:enumeration value="internal"/>
+    <xs:enumeration value="external"/>
+    </xs:restriction>
+    </xs:simpleType>
+    </xs:attribute>
+    </xs:element>
+    </xs:choice>
+    
+    </xs:sequence>
+    </xs:complexType>
+    </xs:element>
+    </xs:sequence>
+    
+    </xs:element>
+    </xs:sequence>
+    </xs:complexType>
+    </xs:element>
+    </xs:schema>
 -->
