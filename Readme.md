@@ -3,7 +3,7 @@ This repository contains the XML Schema for the PWS document that needs to be ag
 It should hopefully be as generic as possible, so as to not get in the way of the implementation of specific features in different group's projects.
 > Each group may, of course, introduce additional features suited to their product/market niche.
 
-I tried to follow what was set down in both [this](https://docs.google.com/document/d/1gtq-B1WeleKX0ulZakJPy3qUrz87qYwA7frx8K8Qr_8/edit?usp=sharing) document and the Project Description.
+I followed roughly what was set down in [this](https://docs.google.com/document/d/1gtq-B1WeleKX0ulZakJPy3qUrz87qYwA7frx8K8Qr_8/edit?usp=sharing) document, which mostly fits with the Project Description.
 
 The Schema is targetting XML 1.1
 

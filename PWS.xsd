@@ -30,9 +30,9 @@
        Attribute group for display size
       </xs:documenation>
     </xs:annotation>
-    <xs:attribute name="x_px" type="xs:double"/>
-    <xs:attribute name="y_px" type="xs:double"/>
-    <xs:attribute name="rot_angle" type="xs:double"/>
+    <xs:attribute name="x_size_px" type="xs:double"/>
+    <xs:attribute name="y_size_px" type="xs:double"/>
+    <xs:attribute name="rot_angle" type="xs:double" use="optional"/>
   </xs:attributeGroup>
  
   <xs:attributeGroup name="hrefAttrs">
@@ -115,13 +115,14 @@
     </xs:annotation>
     <xs:attributeGroup ref="locAttrs"/>
     <xs:attributeGroup ref="sizeAttrs"/>
-    <xs:attribute name="name" type="xs:ID"/><!-- Globally Unique -->
+    <xs:attribute name="ID" type="xs:ID"/><!-- Globally Unique ID -->
     <xs:attribute name="disp_duration_s" type="xs:double" use="optional"/>
     <xs:attribute name="show_after_s" type="xs:double" use="optional"/>
-    <xs:attribute name="fill_colour" type="colourType" use="optional"/>
+    
     <xs:sequence minOccurs="0">
       <!-- possibly a poor choice - anything extending visualType will be able to use any valid element  -->
       <xs:any minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="fill" type="colourType" minOccurs="0"/>
       <xs:element name="shading" minOccurs="0">
 	<xs:annotation>
 	  <xs:documentation>
@@ -134,7 +135,9 @@
 	  <xs:choice>
 	    <xs:element name="basic_shading">
 	      <xs:complexType>
-		<xs:attribute name="colour" type="colourType"/>
+		<xs:all>
+		  <xs:element name="colour" type="colourType"/>
+		</xs:all>
 	      </xs:complexType>
 	    </xs:element>
 	    <xs:any minOccurs="0"/>
@@ -155,8 +158,12 @@
     <xs:anyAttribute/>
     <xs:sequence>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-	<xs:element name="href" type="xs:string">
-	  <xs:attributeGroup ref="hrefAttrs"/>
+	<xs:element name="href">
+	  <xs:complexType>
+	    <xs:extension base="xs:string">
+	      <xs:attributeGroup ref="hrefAttrs"/>
+	    </xs:extension>
+	  </xs:complexType>
 	</xs:element>
 	<xs:element name="underscore" type="xs:string"/>
 	<xs:element name="italic" type="xs:string"/>
@@ -179,7 +186,7 @@
   <xs:complexType name="shapeType">
     <xs:annotation>
       <xs:documenation>
-       A shape
+	A shape
       </xs:documenation>
     </xs:annotation>
     <xs:extension base="visualType">
@@ -202,8 +209,10 @@
 	<xs:all minOccurs="0">
 	  <xs:element name="text" type="textType"/><!-- Text always in a container shape -->
 	  <xs:element name="stroke" type="strokeType"/>
-	  <xs:element name="href" type="xs:string">
-	    <xs:attributeGroup ref="hrefAttrs"/>
+	  <xs:element name="href">
+	    <xs:complexType>
+	      <xs:attributeGroup ref="hrefAttrs"/>
+	    </xs:complexType>
 	  </xs:element>
 	</xs:all>
       </xs:complexContenet>
@@ -249,6 +258,7 @@
     </xs:annotation>
     <xs:extension base="visualType">
       <xs:complexContent>
+	<xs:attribute name="title" type="xs:string"/>
 	<xs:anyAttribute/>
 	<xs:sequence>
 	  <xs:choice minOccurs="0" maxOccurs="unbounded">
