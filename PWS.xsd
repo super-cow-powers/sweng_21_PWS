@@ -1,84 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  
-  <xs:attributeGroup name="metadataAttrs">
-    <xs:annotation>
-      <xs:documentation>
+
+	<xs:attributeGroup name="metadataAttrs">
+		<xs:annotation>
+			<xs:documentation>
         Metadata attribute group. Requires (at minimum) author and version
       </xs:documentation>
-    </xs:annotation>
-    <xs:attribute name="title" type="xs:string" use="optional"/>
-    <xs:attribute name="author" type="xs:string" use="optional"/>
-    <xs:attribute name="version" type="xs:string" use="optional"/>
-    <xs:attribute name="comment" type="xs:string" use="optional"/>
-  </xs:attributeGroup>
-  
-  
-  <xs:attributeGroup name="locAttrs">
-    <xs:annotation>
-      <xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="title" type="xs:string" use="optional" />
+		<xs:attribute name="author" type="xs:string" use="optional" />
+		<xs:attribute name="version" type="xs:string" use="optional" />
+		<xs:attribute name="comment" type="xs:string" use="optional" />
+	</xs:attributeGroup>
+
+
+	<xs:attributeGroup name="locAttrs">
+		<xs:annotation>
+			<xs:documentation>
 	Attribute group for display location
       </xs:documentation>
-    </xs:annotation>
-    <xs:attribute name="x_orig" type="xs:double"/>
-    <xs:attribute name="y_orig" type="xs:double"/>
-    <xs:attribute name="z_ind" type="xs:integer" use="optional"/>
-  </xs:attributeGroup>
-  <xs:attributeGroup name="sizeAttrs">
-    <xs:annotation>
-      <xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="x_orig" type="xs:double" />
+		<xs:attribute name="y_orig" type="xs:double" />
+		<xs:attribute name="z_ind" type="xs:integer" use="optional" />
+	</xs:attributeGroup>
+	<xs:attributeGroup name="sizeAttrs">
+		<xs:annotation>
+			<xs:documentation>
 	Attribute group for display size
       </xs:documentation>
-    </xs:annotation>
-    <xs:attribute name="x_size_px" type="xs:double"/>
-    <xs:attribute name="y_size_px" type="xs:double"/>
-    <xs:attribute name="rot_angle" type="xs:double" use="optional"/>
-  </xs:attributeGroup>
-  
-  <xs:attributeGroup name="hrefAttrs">
-    <xs:annotation>
-      <xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="x_size_px" type="xs:double" />
+		<xs:attribute name="y_size_px" type="xs:double" />
+		<xs:attribute name="rot_angle" type="xs:double" use="optional" />
+	</xs:attributeGroup>
+
+	<xs:attributeGroup name="hrefAttrs">
+		<xs:annotation>
+			<xs:documentation>
 	Attribute group for hrefs
       </xs:documentation>
-    </xs:annotation>
-    <xs:attribute name="target" type="xs:anyURI"/>
-    <xs:attribute name="type">
-      <xs:simpleType>
-	<xs:restriction base="xs:token">
-	  <xs:enumeration value="internal"/>
-	  <xs:enumeration value="external"/>
-	</xs:restriction>
-      </xs:simpleType>
-    </xs:attribute>
-  </xs:attributeGroup>
-  
-  <xs:simpleType name="percentType">
-    <xs:annotation>
-      <xs:documentation>
-	Generic type for 0-100 percentages
+		</xs:annotation>
+		<xs:attribute name="target" type="xs:anyURI" />
+		<xs:attribute name="type">
+			<xs:simpleType>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="internal" />
+					<xs:enumeration value="external" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+
+	<xs:simpleType name="percentType">
+		<xs:annotation>
+			<xs:documentation>
+			  Generic type for 0-100 percentages
       </xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:double">
-      <xs:minInclusive value="0"/>
-      <xs:maxInclusive value="100"/>
-    </xs:restriction>
-  </xs:simpleType>
-  
-  <xs:simpleType name="hexColourType">
-    <xs:annotation>
-      <xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:double">
+			<xs:minInclusive value="0" />
+			<xs:maxInclusive value="100" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="hexColourType">
+		<xs:annotation>
+			<xs:documentation>
 	Flat colour. Hex format
       </xs:documentation>
-    </xs:annotation>
-    <xs:union memberTypes="xs:NMTOKEN">
-      <xs:simpleType>
-	<xs:restriction base="xs:token">
-	  <xs:pattern value="#[0-9a-fA-F]{6}"/>
-	</xs:restriction>
-      </xs:simpleType>
-    </xs:union>
-  </xs:simpleType>
-  <!--
+		</xs:annotation>
+		<xs:union memberTypes="xs:NMTOKEN">
+			<xs:simpleType>
+				<xs:restriction base="xs:token">
+					<xs:pattern value="#[0-9a-fA-F]{6}" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+	<!--
       <xs:complexType name="gradColourType">
       <xs:annotation>
       <xs:documentation>
@@ -93,225 +93,217 @@
       </xs:sequence>
       </xs:complexType>
   -->
-  <xs:complexType name="colourType">
-    <xs:annotation>
-      <xs:documentation>
-	Generic colour type
-      </xs:documentation>
-    </xs:annotation>
-    <xs:choice>
-      <xs:element name="flat" type="hexColourType"/>
-      <!--<xs:element name="grad" type="gradColourType"/>-->
-      <xs:any minOccurs="0"/>
-    </xs:choice>
-    <xs:attribute name="alpha" type="percentType"/>
-  </xs:complexType>
+	<xs:complexType name="colourType">
+		<xs:annotation>
+			<xs:documentation>
+			Generic colour type
+			</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="flat" type="hexColourType" />
+			<!--<xs:element name="grad" type="gradColourType"/>-->
+			<xs:any minOccurs="0" />
+		</xs:choice>
+		<xs:attribute name="alpha" type="percentType" />
+	</xs:complexType>
 
-  <xs:complexType name="visualType">
-    <xs:annotation>
-      <xs:documentation>
+	<xs:complexType name="visualType">
+		<xs:annotation>
+			<xs:documentation>
 	Generic visual type definition
       </xs:documentation>
-    </xs:annotation>
-    <xs:sequence minOccurs="0">
-      <!-- possibly a poor choice - anything extending visualType will be able to use any valid element  -->
-      <xs:any minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="fill" type="colourType" minOccurs="0"/>
-      <xs:element name="shading" minOccurs="0">
-	<xs:annotation>
-	  <xs:documentation>
+		</xs:annotation>
+		<xs:sequence minOccurs="0">
+			<!-- possibly a poor choice - anything extending visualType will be able to use any valid element  -->
+			<xs:any minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="fill" type="colourType" minOccurs="0" />
+			<xs:element name="shading" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
 	    basic_shading should add shade all around object.
 	    Extend with other choice element to define more complex effects.
 	  </xs:documentation>
-	</xs:annotation>
-	<xs:complexType>
-	  <xs:choice>
-	    <xs:element name="basic_shading">
-	      <xs:complexType>
-		<xs:all>
-		  <xs:element name="colour" type="colourType"/>
-		</xs:all>
-	      </xs:complexType>
-	    </xs:element>
-	    <xs:any minOccurs="0"/>
-	  </xs:choice>
-	  <xs:attribute name="enable" type="xs:boolean"/>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="basic_shading">
+							<xs:complexType>
+								<xs:all>
+									<xs:element name="colour" type="colourType" />
+								</xs:all>
+							</xs:complexType>
+						</xs:element>
+						<xs:any minOccurs="0" />
+					</xs:choice>
+					<xs:attribute name="enable" type="xs:boolean" />
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attributeGroup ref="locAttrs" />
+		<xs:attributeGroup ref="sizeAttrs" />
+		<xs:attribute name="ID" type="xs:ID" /> <!-- Globally Unique ID -->
+		<xs:attribute name="disp_duration_s" type="xs:double" use="optional" />
+		<xs:attribute name="show_after_s" type="xs:double" use="optional" />
 	</xs:complexType>
-      </xs:element>
-    </xs:sequence>
-    <xs:attributeGroup ref="locAttrs"/>
-    <xs:attributeGroup ref="sizeAttrs"/>
-    <xs:attribute name="ID" type="xs:ID"/><!-- Globally Unique ID -->
-    <xs:attribute name="disp_duration_s" type="xs:double" use="optional"/>
-    <xs:attribute name="show_after_s" type="xs:double" use="optional"/>
-  </xs:complexType>
-  
-  <xs:complexType name="textType" mixed="true">
-    <xs:annotation>
-      <xs:documentation>
+
+	<xs:complexType name="textType" mixed="true">
+		<xs:annotation>
+			<xs:documentation>
 	Text.
 	Mixed type allows mixing elements with text.
       </xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
-	<xs:element name="href">
-	  <xs:complexType>
-	    <xs:simpleContent>
-	      <xs:extension base="xs:string">
-		<xs:attributeGroup ref="hrefAttrs"/>
-	      </xs:extension>
-	    </xs:simpleContent>
-	  </xs:complexType>
-	</xs:element>
-	<xs:element name="underscore" type="xs:string"/>
-	<xs:element name="italic" type="xs:string"/>
-	<xs:element name="bold" type="xs:string"/>
-	<xs:element name="font">
-	  <xs:complexType>
-	    <xs:simpleContent>
-	      <xs:extension base="xs:string">    
-		<xs:attribute name="colour" type="colourType" use="optional"/>
-		<xs:attribute name="size" type="xs:double" use="optional"/>
-		<xs:attribute name="name" type="xs:string" use="optional"/>
-	      </xs:extension>
-	    </xs:simpleContent>
-	  </xs:complexType>
-	</xs:element>
-      </xs:choice>
-    </xs:sequence>
-    <xs:attribute name="include_source" type="xs:anyURI" use="optional"/>
-    <xs:anyAttribute/>
-  </xs:complexType>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="href">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attributeGroup ref="hrefAttrs" />
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="underscore" type="xs:string" />
+				<xs:element name="italic" type="xs:string" />
+				<xs:element name="bold" type="xs:string" />
+				<xs:element name="colour" type="colourType" />
+				<xs:element name="fontsize" type="xs:double" />
+				<xs:element name="fontname" type="xs:string" />
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="include_source" type="xs:anyURI" use="optional" />
+		<xs:anyAttribute />
+	</xs:complexType>
 
-  <xs:complexType name="shapeType">
-    <xs:annotation>
-      <xs:documentation>
+	<xs:complexType name="shapeType">
+		<xs:annotation>
+			<xs:documentation>
 	A shape
       </xs:documentation>
-    </xs:annotation>
-   
-      <xs:complexContent>
-        <xs:extension base="visualType">
-          <xs:all minOccurs="0">
-            <xs:element name="text" type="textType"/><!-- Text always in a container shape -->
-            <xs:element name="stroke" type="strokeType"/>
-            <xs:element name="href">
-              <xs:complexType>
-                <xs:attributeGroup ref="hrefAttrs"/>
-              </xs:complexType>
-            </xs:element>
-          </xs:all>
-  
-          <xs:attribute name="x_end" type="xs:double" use="optional"/>
-          <xs:attribute name="y_end" type="xs:double" use="optional"/>
-          <xs:attribute name="type" type="xs:token">
-              <xs:annotation>
-                <xs:documentation>
+		</xs:annotation>
+
+		<xs:complexContent>
+			<xs:extension base="visualType">
+				<xs:sequence minOccurs="0">
+					<xs:element name="text" type="textType" minOccurs="0" maxOccurs="1" /> <!-- Text always in a container shape -->
+					<xs:element name="stroke" type="strokeType" minOccurs="0" maxOccurs="1" />
+					<xs:element name="href" minOccurs="0" maxOccurs="1">
+						<xs:complexType>
+							<xs:attributeGroup ref="hrefAttrs" />
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+
+				<xs:attribute name="x_end" type="xs:double" use="optional" />
+				<xs:attribute name="y_end" type="xs:double" use="optional" />
+				<xs:attribute name="type" type="xs:token">
+					<xs:annotation>
+						<xs:documentation>
             Applications should interpret at least:
             "circle"
             "textbox"
             "line" (with use of x/y_end)
                 </xs:documentation>
-              </xs:annotation>
-          </xs:attribute>
-          <xs:anyAttribute/>
-        </xs:extension>
-      </xs:complexContent>
-    
-  </xs:complexType>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:anyAttribute />
+			</xs:extension>
+		</xs:complexContent>
 
-  <xs:complexType name="strokeType">
-    <xs:annotation>
-      <xs:documentation>
+	</xs:complexType>
+
+	<xs:complexType name="strokeType">
+		<xs:annotation>
+			<xs:documentation>
 	Line Stroke base type
       </xs:documentation>
-    </xs:annotation>
-    <xs:attribute name="width" type="xs:double"/>
-    <xs:attribute name="dash-style" type="xs:string>
-      <xs:annotation>
-      <xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="width" type="xs:double" />
+		<xs:attribute name="dash-style" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
 	Min known should be:
 	"plain"
 	
       </xs:documentation>
-    </xs:annotation>
-    </xs:attribute>
-    </xs:complexType>
-  
-  <xs:complexType name="playableType">
-    <xs:annotation>
-      <xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="playableType">
+		<xs:annotation>
+			<xs:documentation>
 	Playable media. Video or Audio
       </xs:documentation>
-    </xs:annotation>
-    
-      <xs:complexContent>
-        <xs:extension base="visualType">
-        <xs:attribute name="include_source" type="xs:anyURI"/>
-        <xs:attribute name="display_player" type="xs:boolean" use="optional"/>
-        <xs:attribute name="seek_offset" type="xs:double" use="optional" />
-        <xs:attribute name="autoplay" type="xs:boolean" use="optional"/>
-        <xs:attribute name="loop" type="xs:boolean" use="optional"/>
-        <xs:anyAttribute/>
-      </xs:extension>
-      </xs:complexContent>
-    
-  </xs:complexType>
+		</xs:annotation>
 
-  <xs:complexType name="imageType">
-    <xs:annotation>
-      <xs:documentation>
+		<xs:complexContent>
+			<xs:extension base="visualType">
+				<xs:attribute name="include_source" type="xs:anyURI" />
+				<xs:attribute name="display_player" type="xs:boolean" use="optional" />
+				<xs:attribute name="seek_offset" type="xs:double" use="optional" />
+				<xs:attribute name="autoplay" type="xs:boolean" use="optional" />
+				<xs:attribute name="loop" type="xs:boolean" use="optional" />
+				<xs:anyAttribute />
+			</xs:extension>
+		</xs:complexContent>
+
+	</xs:complexType>
+
+	<xs:complexType name="imageType">
+		<xs:annotation>
+			<xs:documentation>
 	An image
       </xs:documentation>
-    </xs:annotation>
-    
-      <xs:complexContent><xs:extension base="visualType">
-	<xs:attribute name="include_source" type="xs:anyURI"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
+		</xs:annotation>
 
-  <xs:complexType name="pageType">
-    <xs:annotation>
-      <xs:documentation>
+		<xs:complexContent>
+			<xs:extension base="visualType">
+				<xs:attribute name="include_source" type="xs:anyURI" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="pageType">
+		<xs:annotation>
+			<xs:documentation>
 	A Page/Slide/Whatever
       </xs:documentation>
-    </xs:annotation>
-    
-      <xs:complexContent>
-        <xs:extension base="visualType">
-	<xs:sequence>
-	  <xs:choice minOccurs="0" maxOccurs="unbounded">
-	    <xs:element name="shape" type="shapeType"/>
-	    <xs:element name="image" type="imageType"/>
-	    <xs:element name="playable" type="playableType"/>
-	  </xs:choice>
-	</xs:sequence>
-  <xs:attribute name="title" type="xs:string"/>
-	<xs:anyAttribute/>
-</xs:extension>
-      </xs:complexContent>
-    
-  </xs:complexType>
-  
-  <xs:element name="document">
-    <xs:annotation>
-      <xs:documentation>
+		</xs:annotation>
+
+		<xs:complexContent>
+			<xs:extension base="visualType">
+				<xs:sequence>
+					<xs:choice minOccurs="0" maxOccurs="unbounded">
+						<xs:element name="shape" type="shapeType" />
+						<xs:element name="image" type="imageType" />
+						<xs:element name="playable" type="playableType" />
+					</xs:choice>
+				</xs:sequence>
+				<xs:attribute name="title" type="xs:string" />
+				<xs:anyAttribute />
+			</xs:extension>
+		</xs:complexContent>
+
+	</xs:complexType>
+
+	<xs:element name="document">
+		<xs:annotation>
+			<xs:documentation>
         Top-level visual document
       </xs:documentation>
-    </xs:annotation>
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="page" minOccurs="0" maxOccurs="unbounded" type="pageType" />
-        <xs:any minOccurs="0" maxOccurs="unbounded"/>
-      </xs:sequence>
-      <xs:attributeGroup ref="metadataAttrs"/>
-      <xs:anyAttribute/>
-    </xs:complexType>
-  </xs:element>
-</xs:schema>
-<!--
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="page" minOccurs="0" maxOccurs="unbounded" type="pageType" />
+				<xs:any minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attributeGroup ref="metadataAttrs" />
+			<xs:anyAttribute />
+		</xs:complexType>
+	</xs:element>
+</xs:schema> <!--
     <xs:element name="presentation">
     <xs:complexType>
     <xs:sequence>
