@@ -190,34 +190,35 @@
 	A shape
       </xs:documentation>
     </xs:annotation>
-    <xs:extension base="visualType">
+   
       <xs:complexContent>
-	<xs:attribute name="x_end" type="xs:double" use="optional"/>
-	<xs:attribute name="y_end" type="xs:double" use="optional"/>
-	<xs:attribute name="type">
-	  <xs:simpleType type="xs:token">
-	    <xs:annotation>
-	      <xs:documentation>
-		Applications should interpret at least:
-		"circle"
-		"textbox"
-		"line" (with use of x/y_end)
-	      </xs:documentation>
-	    </xs:annotation>
-	  </xs:simpleType>
-	</xs:attribute>
-	<xs:anyAttribute/>
-	<xs:all minOccurs="0">
-	  <xs:element name="text" type="textType"/><!-- Text always in a container shape -->
-	  <xs:element name="stroke" type="strokeType"/>
-	  <xs:element name="href">
-	    <xs:complexType>
-	      <xs:attributeGroup ref="hrefAttrs"/>
-	    </xs:complexType>
-	  </xs:element>
-	</xs:all>
+        <xs:extension base="visualType">
+          <xs:all minOccurs="0">
+            <xs:element name="text" type="textType"/><!-- Text always in a container shape -->
+            <xs:element name="stroke" type="strokeType"/>
+            <xs:element name="href">
+              <xs:complexType>
+                <xs:attributeGroup ref="hrefAttrs"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:all>
+  
+          <xs:attribute name="x_end" type="xs:double" use="optional"/>
+          <xs:attribute name="y_end" type="xs:double" use="optional"/>
+          <xs:attribute name="type" type="xs:token">
+              <xs:annotation>
+                <xs:documentation>
+            Applications should interpret at least:
+            "circle"
+            "textbox"
+            "line" (with use of x/y_end)
+                </xs:documentation>
+              </xs:annotation>
+          </xs:attribute>
+          <xs:anyAttribute/>
+        </xs:extension>
       </xs:complexContent>
-    </xs:extension>
+    
   </xs:complexType>
 
   <xs:complexType name="playableType">
@@ -226,16 +227,18 @@
 	Playable media. Video or Audio
       </xs:documentation>
     </xs:annotation>
-    <xs:extension base="visualType">
+    
       <xs:complexContent>
+        <xs:extension base="visualType">
         <xs:attribute name="include_source" type="xs:anyURI"/>
         <xs:attribute name="display_player" type="xs:boolean" use="optional"/>
         <xs:attribute name="seek_offset" type="xs:double" use="optional" />
         <xs:attribute name="autoplay" type="xs:boolean" use="optional"/>
         <xs:attribute name="loop" type="xs:boolean" use="optional"/>
         <xs:anyAttribute/>
+      </xs:extension>
       </xs:complexContent>
-    </xs:extension>
+    
   </xs:complexType>
 
   <xs:complexType name="imageType">
@@ -244,11 +247,11 @@
 	An image
       </xs:documentation>
     </xs:annotation>
-    <xs:extension base="visualType">
-      <xs:complexContent>
+    
+      <xs:complexContent><xs:extension base="visualType">
 	<xs:attribute name="include_source" type="xs:anyURI"/>
-      </xs:complexContent>
-    </xs:extension>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="pageType">
@@ -257,10 +260,9 @@
 	A Page/Slide/Whatever
       </xs:documentation>
     </xs:annotation>
-    <xs:extension base="visualType">
+    
       <xs:complexContent>
-	<xs:attribute name="title" type="xs:string"/>
-	<xs:anyAttribute/>
+        <xs:extension base="visualType">
 	<xs:sequence>
 	  <xs:choice minOccurs="0" maxOccurs="unbounded">
 	    <xs:element name="shape" type="shapeType"/>
@@ -268,8 +270,11 @@
 	    <xs:element name="playable" type="playableType"/>
 	  </xs:choice>
 	</xs:sequence>
+  <xs:attribute name="title" type="xs:string"/>
+	<xs:anyAttribute/>
+</xs:extension>
       </xs:complexContent>
-    </xs:extension>
+    
   </xs:complexType>
   
   <xs:element name="document">
