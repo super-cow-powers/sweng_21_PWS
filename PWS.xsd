@@ -17,7 +17,7 @@
   <xs:attributeGroup name="locAttrs">
     <xs:annotation>
       <xs:documentation>
-       Attribute group for display location
+	Attribute group for display location
       </xs:documentation>
     </xs:annotation>
     <xs:attribute name="x_orig" type="xs:double"/>
@@ -27,18 +27,18 @@
   <xs:attributeGroup name="sizeAttrs">
     <xs:annotation>
       <xs:documentation>
-       Attribute group for display size
+	Attribute group for display size
       </xs:documentation>
     </xs:annotation>
     <xs:attribute name="x_size_px" type="xs:double"/>
     <xs:attribute name="y_size_px" type="xs:double"/>
     <xs:attribute name="rot_angle" type="xs:double" use="optional"/>
   </xs:attributeGroup>
- 
+  
   <xs:attributeGroup name="hrefAttrs">
     <xs:annotation>
       <xs:documentation>
-       Attribute group for hrefs
+	Attribute group for hrefs
       </xs:documentation>
     </xs:annotation>
     <xs:attribute name="target" type="xs:anyURI"/>
@@ -55,7 +55,7 @@
   <xs:simpleType name="percentType">
     <xs:annotation>
       <xs:documentation>
-       Generic type for 0-100 percentages
+	Generic type for 0-100 percentages
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:double">
@@ -67,7 +67,7 @@
   <xs:simpleType name="hexColourType">
     <xs:annotation>
       <xs:documentation>
-       Flat colour. Hex format
+	Flat colour. Hex format
       </xs:documentation>
     </xs:annotation>
     <xs:union memberTypes="xs:NMTOKEN">
@@ -78,25 +78,25 @@
       </xs:simpleType>
     </xs:union>
   </xs:simpleType>
-<!--
-  <xs:complexType name="gradColourType">
-    <xs:annotation>
+  <!--
+      <xs:complexType name="gradColourType">
+      <xs:annotation>
       <xs:documentation>
-       Colour gradient
+      Colour gradient
       </xs:documentation>
-    </xs:annotation>
-    <xs:attribute name="grad_type" type="xs:string" use="optional"/>
-    <xs:attribute name="grad_offset" type="percentType"/>
-    <xs:sequence>
+      </xs:annotation>
+      <xs:attribute name="grad_type" type="xs:string" use="optional"/>
+      <xs:attribute name="grad_offset" type="percentType"/>
+      <xs:sequence>
       <xs:element name="colour1" type="hexColourType"/>
       <xs:element name="colour2" type="hexColourType"/>
-    </xs:sequence>
-  </xs:complexType>
+      </xs:sequence>
+      </xs:complexType>
   -->
   <xs:complexType name="colourType">
     <xs:annotation>
       <xs:documentation>
-       Generic colour type
+	Generic colour type
       </xs:documentation>
     </xs:annotation>
     <xs:choice>
@@ -110,7 +110,7 @@
   <xs:complexType name="visualType">
     <xs:annotation>
       <xs:documentation>
-       Generic visual type definition
+	Generic visual type definition
       </xs:documentation>
     </xs:annotation>
     <xs:sequence minOccurs="0">
@@ -135,7 +135,7 @@
 	    </xs:element>
 	    <xs:any minOccurs="0"/>
 	  </xs:choice>
-      <xs:attribute name="enable" type="xs:boolean"/>
+	  <xs:attribute name="enable" type="xs:boolean"/>
 	</xs:complexType>
       </xs:element>
     </xs:sequence>
@@ -157,11 +157,11 @@
       <xs:choice minOccurs="0" maxOccurs="unbounded">
 	<xs:element name="href">
 	  <xs:complexType>
-		  <xs:complexContent>
-			  <xs:extension base="xs:string">
-				<xs:attributeGroup ref="hrefAttrs"/>
-			  </xs:extension>
-		  </xs:complexContent>
+	    <xs:simpleContent>
+	      <xs:extension base="xs:string">
+		<xs:attributeGroup ref="hrefAttrs"/>
+	      </xs:extension>
+	    </xs:simpleContent>
 	  </xs:complexType>
 	</xs:element>
 	<xs:element name="underscore" type="xs:string"/>
@@ -223,7 +223,7 @@
   <xs:complexType name="playableType">
     <xs:annotation>
       <xs:documentation>
-       Playable media. Video or Audio
+	Playable media. Video or Audio
       </xs:documentation>
     </xs:annotation>
     <xs:extension base="visualType">
@@ -241,12 +241,12 @@
   <xs:complexType name="imageType">
     <xs:annotation>
       <xs:documentation>
-       An image
+	An image
       </xs:documentation>
     </xs:annotation>
     <xs:extension base="visualType">
       <xs:complexContent>
-		<xs:attribute name="include_source" type="xs:anyURI"/>
+	<xs:attribute name="include_source" type="xs:anyURI"/>
       </xs:complexContent>
     </xs:extension>
   </xs:complexType>
@@ -254,7 +254,7 @@
   <xs:complexType name="pageType">
     <xs:annotation>
       <xs:documentation>
-       A Page/Slide/Whatever
+	A Page/Slide/Whatever
       </xs:documentation>
     </xs:annotation>
     <xs:extension base="visualType">
