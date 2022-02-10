@@ -3,9 +3,9 @@
   
   <xs:attributeGroup name="metadataAttrs">
     <xs:annotation>
-      <xs:documenation>
+      <xs:documentation>
         Metadata attribute group. Requires (at minimum) author and version
-      </xs:documenation>
+      </xs:documentation>
     </xs:annotation>
     <xs:attribute name="title" type="xs:string" use="optional"/>
     <xs:attribute name="author" type="xs:string" use="optional"/>
@@ -16,9 +16,9 @@
   
   <xs:attributeGroup name="locAttrs">
     <xs:annotation>
-      <xs:documenation>
+      <xs:documentation>
        Attribute group for display location
-      </xs:documenation>
+      </xs:documentation>
     </xs:annotation>
     <xs:attribute name="x_orig" type="xs:double"/>
     <xs:attribute name="y_orig" type="xs:double"/>
@@ -26,9 +26,9 @@
   </xs:attributeGroup>
   <xs:attributeGroup name="sizeAttrs">
     <xs:annotation>
-      <xs:documenation>
+      <xs:documentation>
        Attribute group for display size
-      </xs:documenation>
+      </xs:documentation>
     </xs:annotation>
     <xs:attribute name="x_size_px" type="xs:double"/>
     <xs:attribute name="y_size_px" type="xs:double"/>
@@ -37,9 +37,9 @@
  
   <xs:attributeGroup name="hrefAttrs">
     <xs:annotation>
-      <xs:documenation>
+      <xs:documentation>
        Attribute group for hrefs
-      </xs:documenation>
+      </xs:documentation>
     </xs:annotation>
     <xs:attribute name="target" type="xs:anyURI"/>
     <xs:attribute name="type">
@@ -54,9 +54,9 @@
   
   <xs:simpleType name="percentType">
     <xs:annotation>
-      <xs:documenation>
+      <xs:documentation>
        Generic type for 0-100 percentages
-      </xs:documenation>
+      </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:double">
       <xs:minInclusive value="0"/>
@@ -66,9 +66,9 @@
   
   <xs:simpleType name="hexColourType">
     <xs:annotation>
-      <xs:documenation>
+      <xs:documentation>
        Flat colour. Hex format
-      </xs:documenation>
+      </xs:documentation>
     </xs:annotation>
     <xs:union memberTypes="xs:NMTOKEN">
       <xs:simpleType>
@@ -79,11 +79,11 @@
     </xs:union>
   </xs:simpleType>
 <!--
-  <xs:complextype name="gradColourType">
+  <xs:complexType name="gradColourType">
     <xs:annotation>
-      <xs:documenation>
+      <xs:documentation>
        Colour gradient
-      </xs:documenation>
+      </xs:documentation>
     </xs:annotation>
     <xs:attribute name="grad_type" type="xs:string" use="optional"/>
     <xs:attribute name="grad_offset" type="percentType"/>
@@ -91,34 +91,28 @@
       <xs:element name="colour1" type="hexColourType"/>
       <xs:element name="colour2" type="hexColourType"/>
     </xs:sequence>
-  </xs:complextype>
+  </xs:complexType>
   -->
-  <xs:complextype name="colourType">
+  <xs:complexType name="colourType">
     <xs:annotation>
-      <xs:documenation>
+      <xs:documentation>
        Generic colour type
-      </xs:documenation>
+      </xs:documentation>
     </xs:annotation>
-    <xs:attribute name="alpha" type="percentType"/>
     <xs:choice>
       <xs:element name="flat" type="hexColourType"/>
       <!--<xs:element name="grad" type="gradColourType"/>-->
       <xs:any minOccurs="0"/>
     </xs:choice>
-  </xs:complextype>
+    <xs:attribute name="alpha" type="percentType"/>
+  </xs:complexType>
 
   <xs:complexType name="visualType">
     <xs:annotation>
-      <xs:documenation>
+      <xs:documentation>
        Generic visual type definition
-      </xs:documenation>
+      </xs:documentation>
     </xs:annotation>
-    <xs:attributeGroup ref="locAttrs"/>
-    <xs:attributeGroup ref="sizeAttrs"/>
-    <xs:attribute name="ID" type="xs:ID"/><!-- Globally Unique ID -->
-    <xs:attribute name="disp_duration_s" type="xs:double" use="optional"/>
-    <xs:attribute name="show_after_s" type="xs:double" use="optional"/>
-    
     <xs:sequence minOccurs="0">
       <!-- possibly a poor choice - anything extending visualType will be able to use any valid element  -->
       <xs:any minOccurs="0" maxOccurs="unbounded"/>
@@ -131,7 +125,6 @@
 	  </xs:documentation>
 	</xs:annotation>
 	<xs:complexType>
-	  <xs:attribute name="enable" type="xs:boolean"/>
 	  <xs:choice>
 	    <xs:element name="basic_shading">
 	      <xs:complexType>
@@ -142,9 +135,15 @@
 	    </xs:element>
 	    <xs:any minOccurs="0"/>
 	  </xs:choice>
+      <xs:attribute name="enable" type="xs:boolean"/>
 	</xs:complexType>
       </xs:element>
     </xs:sequence>
+    <xs:attributeGroup ref="locAttrs"/>
+    <xs:attributeGroup ref="sizeAttrs"/>
+    <xs:attribute name="ID" type="xs:ID"/><!-- Globally Unique ID -->
+    <xs:attribute name="disp_duration_s" type="xs:double" use="optional"/>
+    <xs:attribute name="show_after_s" type="xs:double" use="optional"/>
   </xs:complexType>
   
   <xs:complexType name="textType" mixed="true">
@@ -154,15 +153,15 @@
 	Mixed type allows mixing elements with text.
       </xs:documentation>
     </xs:annotation>
-    <xs:attribute name="include_source" type="xs:anyURI" use="optional"/>
-    <xs:anyAttribute/>
     <xs:sequence>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
 	<xs:element name="href">
 	  <xs:complexType>
-	    <xs:extension base="xs:string">
-	      <xs:attributeGroup ref="hrefAttrs"/>
-	    </xs:extension>
+		  <xs:complexContent>
+			  <xs:extension base="xs:string">
+				<xs:attributeGroup ref="hrefAttrs"/>
+			  </xs:extension>
+		  </xs:complexContent>
 	  </xs:complexType>
 	</xs:element>
 	<xs:element name="underscore" type="xs:string"/>
@@ -181,16 +180,18 @@
 	</xs:element>
       </xs:choice>
     </xs:sequence>
+    <xs:attribute name="include_source" type="xs:anyURI" use="optional"/>
+    <xs:anyAttribute/>
   </xs:complexType>
 
   <xs:complexType name="shapeType">
     <xs:annotation>
-      <xs:documenation>
+      <xs:documentation>
 	A shape
-      </xs:documenation>
+      </xs:documentation>
     </xs:annotation>
     <xs:extension base="visualType">
-      <xs:complexContenet>
+      <xs:complexContent>
 	<xs:attribute name="x_end" type="xs:double" use="optional"/>
 	<xs:attribute name="y_end" type="xs:double" use="optional"/>
 	<xs:attribute name="type">
@@ -215,46 +216,46 @@
 	    </xs:complexType>
 	  </xs:element>
 	</xs:all>
-      </xs:complexContenet>
+      </xs:complexContent>
     </xs:extension>
   </xs:complexType>
 
   <xs:complexType name="playableType">
     <xs:annotation>
-      <xs:documenation>
+      <xs:documentation>
        Playable media. Video or Audio
-      </xs:documenation>
+      </xs:documentation>
     </xs:annotation>
     <xs:extension base="visualType">
       <xs:complexContent>
-	<xs:attribute name="include_source" type="xs:anyURI"/>
-	<xs:attribute name="display_player" type="xs:boolean" use="optional"/>
-	<xs:attribute name="seek_offset" type="xs:double" use="optional" />
-	<xs:attribute name="autoplay" type="xs:boolean" use="optional"/>
-	<xs:attribute name="loop" type="xs:boolean" use="optional"/>
-	<xs:anyAttribute/>
+        <xs:attribute name="include_source" type="xs:anyURI"/>
+        <xs:attribute name="display_player" type="xs:boolean" use="optional"/>
+        <xs:attribute name="seek_offset" type="xs:double" use="optional" />
+        <xs:attribute name="autoplay" type="xs:boolean" use="optional"/>
+        <xs:attribute name="loop" type="xs:boolean" use="optional"/>
+        <xs:anyAttribute/>
       </xs:complexContent>
     </xs:extension>
   </xs:complexType>
 
   <xs:complexType name="imageType">
     <xs:annotation>
-      <xs:documenation>
+      <xs:documentation>
        An image
-      </xs:documenation>
+      </xs:documentation>
     </xs:annotation>
     <xs:extension base="visualType">
       <xs:complexContent>
-	<xs:attribute name="include_source" type="xs:anyURI"/>
+		<xs:attribute name="include_source" type="xs:anyURI"/>
       </xs:complexContent>
     </xs:extension>
   </xs:complexType>
 
   <xs:complexType name="pageType">
     <xs:annotation>
-      <xs:documenation>
+      <xs:documentation>
        A Page/Slide/Whatever
-      </xs:documenation>
+      </xs:documentation>
     </xs:annotation>
     <xs:extension base="visualType">
       <xs:complexContent>
@@ -273,17 +274,17 @@
   
   <xs:element name="document">
     <xs:annotation>
-      <xs:documenation>
+      <xs:documentation>
         Top-level visual document
-      </xs:documenation>
+      </xs:documentation>
     </xs:annotation>
     <xs:complexType>
+      <xs:sequence>
+        <xs:element name="page" minOccurs="0" maxOccurs="unbounded" type="pageType" />
+        <xs:any minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
       <xs:attributeGroup ref="metadataAttrs"/>
       <xs:anyAttribute/>
-      <xs:sequence>
-	<xs:element name="page" minOccurs="0" maxOccurs="unbounded" type="pageType">
-	<xs:any minOccurs="0" maxOccurs="unbounded"/>
-      </xs:sequence>
     </xs:complexType>
   </xs:element>
 </xs:schema>
