@@ -221,24 +221,6 @@
     
   </xs:complexType>
 
-  <xs:complexType name="strokeType">
-    <xs:annotation>
-      <xs:documentation>
-	Line Stroke base type
-      </xs:documentation>
-    </xs:annotation>
-    <xs:attribute name="width" type="xs:double"/>
-    <xs:attribute name="dash-style" type="xs:string>
-      <xs:annotation>
-      <xs:documentation>
-	Min known should be:
-	"plain"
-	
-      </xs:documentation>
-    </xs:annotation>
-    </xs:attribute>
-    </xs:complexType>
-  
   <xs:complexType name="playableType">
     <xs:annotation>
       <xs:documentation>
