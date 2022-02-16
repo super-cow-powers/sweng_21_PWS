@@ -194,9 +194,12 @@
 	<xsd:complexType name="strokeType">
 		<xsd:annotation>
 			<xsd:documentation>
-	Line Stroke base type
+	Shape stroke type
       </xsd:documentation>
 		</xsd:annotation>
+		<xsd:sequence minOccurs="0">
+		  <xsd:any minOccurs="0"/>
+		</xsd:sequence>
 		<xsd:attribute name="width" type="xsd:double" />
 		<xsd:attribute name="dash-style" type="xsd:string">
 			<xsd:annotation>
@@ -207,6 +210,7 @@
 				</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
+		<xsd:anyAttribute/>
 	</xsd:complexType>
 
 	<xsd:complexType name="playableType">

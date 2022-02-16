@@ -2,6 +2,13 @@
 <!DOCTYPE xml>
 <base:document xmlns:base="PWS_Base"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="PWS_Base file://./PWS.xsd">
-		   
+    xsi:schemaLocation="PWS_Base https://raw.githubusercontent.com/super-cow-powers/sweng_21_PWS/master/PWS.xsd">
+  
+  <base:page title="first page" ID="page-0" x_orig="0" y_orig="0" x_size_px="400" y_size_px="400">
+    
+  </base:page>
+
+  <base:page title="second page" ID="page-1" x_orig="0" y_orig="0" x_size_px="400" y_size_px="400">
+    
+  </base:page>
 </base:document>
