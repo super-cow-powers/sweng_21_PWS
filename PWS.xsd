@@ -1,8 +1,8 @@
-<?xml version="1.1" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	   elementFormDefault="qualified" xml:lang="EN"
-	   xmlns:target="2122_PWS_Base"
-           targetNamespace="2122_PWS_Base"
+	   xmlns:target="PWS_Base"
+           targetNamespace="PWS_Base"
            >
 
 	<xs:attributeGroup name="metadataAttrs">
@@ -68,7 +68,7 @@
 		</xs:restriction>
 	</xs:simpleType>
 
-	<xs:simpleType name="hexColourType">
+	<xs:simpleType name="colourType">
 		<xs:annotation>
 			<xs:documentation>
 	Flat colour. Hex format
@@ -82,34 +82,6 @@
 			</xs:simpleType>
 		</xs:union>
 	</xs:simpleType>
-	<!--
-      <xs:complexType name="gradColourType">
-      <xs:annotation>
-      <xs:documentation>
-      Colour gradient
-      </xs:documentation>
-      </xs:annotation>
-      <xs:attribute name="grad_type" type="xs:string" use="optional"/>
-      <xs:attribute name="grad_offset" type="percentType"/>
-      <xs:sequence>
-      <xs:element name="colour1" type="hexColourType"/>
-      <xs:element name="colour2" type="hexColourType"/>
-      </xs:sequence>
-      </xs:complexType>
-  -->
-	<xs:complexType name="colourType">
-		<xs:annotation>
-			<xs:documentation>
-			Generic colour type
-			</xs:documentation>
-		</xs:annotation>
-		<xs:choice>
-			<xs:element name="flat" type="target:hexColourType" />
-			<!--<xs:element name="grad" type="gradColourType"/>-->
-			<xs:any minOccurs="0" />
-		</xs:choice>
-		<xs:attribute name="alpha" type="target:percentType" />
-	</xs:complexType>
 
 	<xs:complexType name="visualType">
 		<xs:annotation>
@@ -120,7 +92,6 @@
 		<xs:sequence minOccurs="0">
 			<!-- possibly a poor choice - anything extending visualType will be able to use any valid element  -->
 			<xs:any minOccurs="0" maxOccurs="unbounded" />
-			<xs:element name="fill" type="target:colourType" minOccurs="0" />
 			<xs:element name="shading" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>
@@ -146,6 +117,8 @@
 		<xs:attributeGroup ref="target:locAttrs" />
 		<xs:attributeGroup ref="target:sizeAttrs" />
 		<xs:attribute name="ID" type="xs:ID" /> <!-- Globally Unique ID -->
+		<xs:attribute name="alpha" type="target:percentType" use="optional" />
+		<xs:attribute name="fill" type="target:colourType" use="optional" />
 		<xs:attribute name="disp_duration_s" type="xs:double" use="optional" />
 		<xs:attribute name="show_after_s" type="xs:double" use="optional" />
 		<xs:anyAttribute/><!-- permit any valid attribute -->
