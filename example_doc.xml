@@ -2,7 +2,6 @@
 <!DOCTYPE xml>
 <base:document xmlns:base="PWS_Base"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="PWS_Base https://github.com/super-cow-powers/sweng_21_PWS/blob/master/PWS.xsd">
+    xsi:schemaLocation="PWS_Base file://./PWS.xsd">
 		   
->
 </base:document>
