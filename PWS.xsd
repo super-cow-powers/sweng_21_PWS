@@ -71,13 +71,13 @@
 	<xsd:simpleType name="colourType">
 		<xsd:annotation>
 			<xsd:documentation>
-	Flat colour. Hex format
+	Flat colour. Hex RGBA format
       </xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:NMTOKEN">
 			<xsd:simpleType>
 				<xsd:restriction base="xsd:token">
-					<xsd:pattern value="#[0-9a-fA-F]{6}" />
+					<xsd:pattern value="#[0-9a-fA-F]{8}" />
 				</xsd:restriction>
 			</xsd:simpleType>
 		</xsd:union>
