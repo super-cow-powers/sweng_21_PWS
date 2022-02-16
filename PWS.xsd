@@ -1,6 +1,7 @@
 <?xml version="1.1" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	   elementFormDefault="qualified" xml:lang="EN"
+	   xmlns:target="2122_PWS_Base"
            targetNamespace="2122_PWS_Base"
            >
 
@@ -103,11 +104,11 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:choice>
-			<xs:element name="flat" type="hexColourType" />
+			<xs:element name="flat" type="target:hexColourType" />
 			<!--<xs:element name="grad" type="gradColourType"/>-->
 			<xs:any minOccurs="0" />
 		</xs:choice>
-		<xs:attribute name="alpha" type="percentType" />
+		<xs:attribute name="alpha" type="target:percentType" />
 	</xs:complexType>
 
 	<xs:complexType name="visualType">
@@ -119,7 +120,7 @@
 		<xs:sequence minOccurs="0">
 			<!-- possibly a poor choice - anything extending visualType will be able to use any valid element  -->
 			<xs:any minOccurs="0" maxOccurs="unbounded" />
-			<xs:element name="fill" type="colourType" minOccurs="0" />
+			<xs:element name="fill" type="target:colourType" minOccurs="0" />
 			<xs:element name="shading" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>
@@ -132,7 +133,7 @@
 						<xs:element name="basic_shading">
 							<xs:complexType>
 								<xs:all>
-									<xs:element name="colour" type="colourType" />
+									<xs:element name="colour" type="target:colourType" />
 								</xs:all>
 							</xs:complexType>
 						</xs:element>
@@ -142,11 +143,12 @@
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
-		<xs:attributeGroup ref="locAttrs" />
-		<xs:attributeGroup ref="sizeAttrs" />
+		<xs:attributeGroup ref="target:locAttrs" />
+		<xs:attributeGroup ref="target:sizeAttrs" />
 		<xs:attribute name="ID" type="xs:ID" /> <!-- Globally Unique ID -->
 		<xs:attribute name="disp_duration_s" type="xs:double" use="optional" />
 		<xs:attribute name="show_after_s" type="xs:double" use="optional" />
+		<xs:anyAttribute/><!-- permit any valid attribute -->
 	</xs:complexType>
 
 	<xs:complexType name="textType" mixed="true">
@@ -162,7 +164,7 @@
 					<xs:complexType>
 						<xs:simpleContent>
 							<xs:extension base="xs:string">
-								<xs:attributeGroup ref="hrefAttrs" />
+								<xs:attributeGroup ref="target:hrefAttrs" />
 							</xs:extension>
 						</xs:simpleContent>
 					</xs:complexType>
@@ -170,7 +172,7 @@
 				<xs:element name="underscore" type="xs:string" />
 				<xs:element name="italic" type="xs:string" />
 				<xs:element name="bold" type="xs:string" />
-				<xs:element name="colour" type="colourType" />
+				<xs:element name="colour" type="target:colourType" />
 				<xs:element name="fontsize" type="xs:double" />
 				<xs:element name="fontname" type="xs:string" />
 			</xs:choice>
@@ -187,13 +189,13 @@
 		</xs:annotation>
 
 		<xs:complexContent>
-			<xs:extension base="visualType">
+			<xs:extension base="target:visualType">
 				<xs:sequence minOccurs="0">
-					<xs:element name="text" type="textType" minOccurs="0" maxOccurs="1" /> <!-- Text always in a container shape -->
-					<xs:element name="stroke" type="strokeType" minOccurs="0" maxOccurs="1" />
+					<xs:element name="text" type="target:textType" minOccurs="0" maxOccurs="1" /> <!-- Text always in a container shape -->
+					<xs:element name="stroke" type="target:strokeType" minOccurs="0" maxOccurs="1" />
 					<xs:element name="href" minOccurs="0" maxOccurs="1">
 						<xs:complexType>
-							<xs:attributeGroup ref="hrefAttrs" />
+							<xs:attributeGroup ref="target:hrefAttrs" />
 						</xs:complexType>
 					</xs:element>
 				</xs:sequence>
@@ -229,7 +231,7 @@
 	Min known should be:
 	"plain"
 	
-      </xs:documentation>
+				</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 	</xs:complexType>
@@ -242,12 +244,20 @@
 		</xs:annotation>
 
 		<xs:complexContent>
-			<xs:extension base="visualType">
+			<xs:extension base="target:visualType">
 				<xs:attribute name="include_source" type="xs:anyURI" />
 				<xs:attribute name="display_player" type="xs:boolean" use="optional" />
 				<xs:attribute name="seek_offset" type="xs:double" use="optional" />
 				<xs:attribute name="autoplay" type="xs:boolean" use="optional" />
 				<xs:attribute name="loop" type="xs:boolean" use="optional" />
+				<xs:attribute name="type">
+				  <xs:simpleType>
+				    <xs:restriction base="xs:token">
+					<xs:enumeration value="audio" />
+					<xs:enumeration value="video" />
+				    </xs:restriction>
+				  </xs:simpleType>
+				</xs:attribute>
 				<xs:anyAttribute />
 			</xs:extension>
 		</xs:complexContent>
@@ -262,7 +272,7 @@
 		</xs:annotation>
 
 		<xs:complexContent>
-			<xs:extension base="visualType">
+			<xs:extension base="target:visualType">
 				<xs:attribute name="include_source" type="xs:anyURI" />
 			</xs:extension>
 		</xs:complexContent>
@@ -276,12 +286,12 @@
 		</xs:annotation>
 
 		<xs:complexContent>
-			<xs:extension base="visualType">
+			<xs:extension base="target:visualType">
 				<xs:sequence>
 					<xs:choice minOccurs="0" maxOccurs="unbounded">
-						<xs:element name="shape" type="shapeType" />
-						<xs:element name="image" type="imageType" />
-						<xs:element name="playable" type="playableType" />
+						<xs:element name="shape" type="target:shapeType" />
+						<xs:element name="image" type="target:imageType" />
+						<xs:element name="playable" type="target:playableType" />
 					</xs:choice>
 				</xs:sequence>
 				<xs:attribute name="title" type="xs:string" />
@@ -299,10 +309,10 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="page" minOccurs="0" maxOccurs="unbounded" type="pageType" />
+				<xs:element name="page" minOccurs="0" maxOccurs="unbounded" type="target:pageType" />
 				<xs:any minOccurs="0" maxOccurs="unbounded" />
 			</xs:sequence>
-			<xs:attributeGroup ref="metadataAttrs" />
+			<xs:attributeGroup ref="target:metadataAttrs" />
 			<xs:anyAttribute />
 		</xs:complexType>
 	</xs:element>
