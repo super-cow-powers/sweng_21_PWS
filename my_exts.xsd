@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This is an example of a specific extension schema -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xml:lang="EN" xmlns:target="PWS_Exts" targetNamespace="PWS_Exts">
+	<xsd:element name="cool_element" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>
+        This is a cool extension element
+      </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+</xsd:schema>
