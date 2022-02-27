@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	   elementFormDefault="qualified" xml:lang="EN"
-	   xmlns:target="PWS_Base"
-           targetNamespace="PWS_Base"
-           >
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xml:lang="EN" xmlns:base="PWS_Base" targetNamespace="PWS_Base">
 
 	<xsd:attributeGroup name="metadataAttrs">
 		<xsd:annotation>
@@ -83,47 +79,51 @@
 		</xsd:union>
 	</xsd:simpleType>
 
+		<xsd:complexType name="strokeType">
+		<xsd:annotation>
+			<xsd:documentation>
+	Shape stroke type
+      </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:any minOccurs="0" />
+		</xsd:sequence>
+		<xsd:attribute name="width" type="xsd:double" />
+		<xsd:attribute name="dash-style" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation>
+	Min known should be:
+	"plain"
+	
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="colour" type="base:colourType" />
+		<xsd:anyAttribute />
+	</xsd:complexType>
+
+	
 	<xsd:complexType name="visualType">
 		<xsd:annotation>
 			<xsd:documentation>
 	Generic visual type definition
       </xsd:documentation>
 		</xsd:annotation>
-		<xsd:sequence minOccurs="0">
-			<!-- possibly a poor choice - anything extending visualType will be able to use any valid element  -->
-			<xsd:any minOccurs="0" maxOccurs="unbounded" />
-			<xsd:element name="shading" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>
-	    basic_shading should add shade all around object.
-	    Extend with other choice element to define more complex effects.
-	  </xsd:documentation>
-				</xsd:annotation>
-				<xsd:complexType>
-					<xsd:choice>
-						<xsd:element name="basic_shading">
-							<xsd:complexType>
-								<xsd:all>
-									<xsd:element name="colour" type="target:colourType" />
-								</xsd:all>
-							</xsd:complexType>
-						</xsd:element>
-						<xsd:any minOccurs="0" />
-					</xsd:choice>
-					<xsd:attribute name="enable" type="xsd:boolean" />
-				</xsd:complexType>
-			</xsd:element>
-		</xsd:sequence>
-		<xsd:attributeGroup ref="target:locAttrs" />
-		<xsd:attributeGroup ref="target:sizeAttrs" />
+		<xsd:attributeGroup ref="base:locAttrs" />
+		<xsd:attributeGroup ref="base:sizeAttrs" />
 		<xsd:attribute name="ID" type="xsd:ID" /> <!-- Globally Unique ID -->
-		<xsd:attribute name="alpha" type="target:percentType" use="optional" />
-		<xsd:attribute name="fill" type="target:colourType" use="optional" />
+		<xsd:attribute name="shade_colour" type="base:colourType" use="optional"/>
+		<xsd:attribute name="l-shade-px" type="xsd:double" use="optional"/>
+		<xsd:attribute name="r-shade-px" type="xsd:double" use="optional"/>
+		<xsd:attribute name="t-shade-px" type="xsd:double" use="optional"/>
+		<xsd:attribute name="b-shade-px" type="xsd:double" use="optional"/>
+		<xsd:attribute name="alpha" type="base:percentType" use="optional" />
+		<xsd:attribute name="fill" type="base:colourType" use="optional" />
 		<xsd:attribute name="disp_duration_s" type="xsd:double" use="optional" />
 		<xsd:attribute name="show_after_s" type="xsd:double" use="optional" />
-		<xsd:anyAttribute/><!-- permit any valid attribute -->
+		<xsd:anyAttribute /> <!-- permit any valid attribute -->
 	</xsd:complexType>
-
+	
 	<xsd:complexType name="textType" mixed="true">
 		<xsd:annotation>
 			<xsd:documentation>
@@ -132,26 +132,54 @@
       </xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:choice minOccurs="0" maxOccurs="unbounded">
-				<xsd:element name="href">
-					<xsd:complexType>
-						<xsd:simpleContent>
-							<xsd:extension base="xsd:string">
-								<xsd:attributeGroup ref="target:hrefAttrs" />
-							</xsd:extension>
-						</xsd:simpleContent>
-					</xsd:complexType>
-				</xsd:element>
-				<xsd:element name="underscore" type="xsd:string" />
-				<xsd:element name="italic" type="xsd:string" />
-				<xsd:element name="bold" type="xsd:string" />
-				<xsd:element name="colour" type="target:colourType" />
-				<xsd:element name="fontsize" type="xsd:double" />
-				<xsd:element name="fontname" type="xsd:string" />
-			</xsd:choice>
+			<xsd:element name="font" maxOccurs="unbounded">
+				<xsd:complexType mixed="true">
+					<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+						<xsd:element name="href" minOccurs="0">
+							<xsd:complexType>
+								<xsd:simpleContent>
+									<xsd:extension base="xsd:string">
+										<xsd:attributeGroup ref="base:hrefAttrs" />
+									</xsd:extension>
+								</xsd:simpleContent>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:any minOccurs="0"/>
+					</xsd:sequence>
+					<xsd:attribute name="underscore" type="xsd:boolean" use="optional" />
+					<xsd:attribute name="italic" type="xsd:boolean" use="optional" />
+					<xsd:attribute name="bold" type="xsd:boolean" use="optional" />
+					<xsd:attribute name="size" type="xsd:double" use="optional" />
+					<xsd:attribute name="name" type="xsd:token" use="optional" />
+					<xsd:attribute name="colour" type="base:colourType" use="optional" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:any minOccurs="0" />
 		</xsd:sequence>
 		<xsd:attribute name="include_source" type="xsd:anyURI" use="optional" />
 		<xsd:anyAttribute />
+	</xsd:complexType>
+	<xsd:complexType name="tableType">
+		<xsd:annotation>
+			<xsd:documentation>
+			  Table. Must contain at least 1 row
+      </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="base:visualType">
+				<xsd:sequence>
+					<xsd:element name="row">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="column" minOccurs="1" maxOccurs="unbounded" type="base:textType" />
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:any minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+				
+			</xsd:extension>
+		</xsd:complexContent>
 	</xsd:complexType>
 
 	<xsd:complexType name="shapeType">
@@ -162,15 +190,16 @@
 		</xsd:annotation>
 
 		<xsd:complexContent>
-			<xsd:extension base="target:visualType">
-				<xsd:sequence minOccurs="0">
-					<xsd:element name="text" type="target:textType" minOccurs="0" maxOccurs="1" /> <!-- Text always in a container shape -->
-					<xsd:element name="stroke" type="target:strokeType" minOccurs="0" maxOccurs="1" />
+			<xsd:extension base="base:visualType">
+				<xsd:sequence>
+					<xsd:element name="text" type="base:textType" minOccurs="0" maxOccurs="1" /> <!-- Text always in a container shape -->
+					<xsd:element name="stroke" type="base:strokeType" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="href" minOccurs="0" maxOccurs="1">
 						<xsd:complexType>
-							<xsd:attributeGroup ref="target:hrefAttrs" />
+							<xsd:attributeGroup ref="base:hrefAttrs" />
 						</xsd:complexType>
 					</xsd:element>
+					<xsd:any minOccurs="0" maxOccurs="unbounded" />
 				</xsd:sequence>
 
 				<xsd:attribute name="x_end" type="xsd:double" use="optional" />
@@ -191,28 +220,6 @@
 
 	</xsd:complexType>
 
-	<xsd:complexType name="strokeType">
-		<xsd:annotation>
-			<xsd:documentation>
-	Shape stroke type
-      </xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence minOccurs="0">
-		  <xsd:any minOccurs="0"/>
-		</xsd:sequence>
-		<xsd:attribute name="width" type="xsd:double" />
-		<xsd:attribute name="dash-style" type="xsd:string">
-			<xsd:annotation>
-				<xsd:documentation>
-	Min known should be:
-	"plain"
-	
-				</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attribute>
-		<xsd:anyAttribute/>
-	</xsd:complexType>
-
 	<xsd:complexType name="playableType">
 		<xsd:annotation>
 			<xsd:documentation>
@@ -221,19 +228,22 @@
 		</xsd:annotation>
 
 		<xsd:complexContent>
-			<xsd:extension base="target:visualType">
+		  <xsd:extension base="base:visualType">
+		    <xsd:sequence>
+		      <xsd:any minOccurs="0" maxOccurs="unbounded" />
+		    </xsd:sequence>
 				<xsd:attribute name="include_source" type="xsd:anyURI" />
 				<xsd:attribute name="display_player" type="xsd:boolean" use="optional" />
 				<xsd:attribute name="seek_offset" type="xsd:double" use="optional" />
 				<xsd:attribute name="autoplay" type="xsd:boolean" use="optional" />
 				<xsd:attribute name="loop" type="xsd:boolean" use="optional" />
 				<xsd:attribute name="type">
-				  <xsd:simpleType>
-				    <xsd:restriction base="xsd:token">
-					<xsd:enumeration value="audio" />
-					<xsd:enumeration value="video" />
-				    </xsd:restriction>
-				  </xsd:simpleType>
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:token">
+							<xsd:enumeration value="audio" />
+							<xsd:enumeration value="video" />
+						</xsd:restriction>
+					</xsd:simpleType>
 				</xsd:attribute>
 				<xsd:anyAttribute />
 			</xsd:extension>
@@ -249,8 +259,11 @@
 		</xsd:annotation>
 
 		<xsd:complexContent>
-			<xsd:extension base="target:visualType">
-				<xsd:attribute name="include_source" type="xsd:anyURI" />
+		  <xsd:extension base="base:visualType">
+		    <xsd:sequence>
+		      <xsd:any minOccurs="0" maxOccurs="unbounded" />
+		    </xsd:sequence>
+			  <xsd:attribute name="include_source" type="xsd:anyURI" />
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -263,13 +276,13 @@
 		</xsd:annotation>
 
 		<xsd:complexContent>
-			<xsd:extension base="target:visualType">
+			<xsd:extension base="base:visualType">
 				<xsd:sequence>
-					<xsd:choice minOccurs="0" maxOccurs="unbounded">
-						<xsd:element name="shape" type="target:shapeType" />
-						<xsd:element name="image" type="target:imageType" />
-						<xsd:element name="playable" type="target:playableType" />
-					</xsd:choice>
+						<xsd:element name="shape" type="base:shapeType" minOccurs="0"/>
+						<xsd:element name="image" type="base:imageType" minOccurs="0"/>
+						<xsd:element name="playable" type="base:playableType" minOccurs="0"/>
+						<xsd:element name="table" type="base:tableType" minOccurs="0"/>
+						<xsd:any minOccurs="0" maxOccurs="unbounded" />
 				</xsd:sequence>
 				<xsd:attribute name="title" type="xsd:string" />
 				<xsd:anyAttribute />
@@ -286,10 +299,10 @@
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:sequence>
-				<xsd:element name="page" minOccurs="0" maxOccurs="unbounded" type="target:pageType" />
+				<xsd:element name="page" minOccurs="0" maxOccurs="unbounded" type="base:pageType" />
 				<xsd:any minOccurs="0" maxOccurs="unbounded" />
 			</xsd:sequence>
-			<xsd:attributeGroup ref="target:metadataAttrs" />
+			<xsd:attributeGroup ref="base:metadataAttrs" />
 			<xsd:anyAttribute />
 		</xsd:complexType>
 	</xsd:element>
