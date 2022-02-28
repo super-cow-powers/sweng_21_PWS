@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this template
--->
 
+<base:document xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:ext='PWS_Exts' xmlns:base='PWS_Base' xsi:schemaLocation='PWS_Base https://raw.githubusercontent.com/super-cow-powers/sweng_21_PWS/master/PWS.xsd PWS_Exts https://raw.githubusercontent.com/super-cow-powers/sweng_21_PWS/master/my_exts.xsd'>
+	<base:page x_orig="0" y_orig="0" z_ind="0" x_size_px="400" y_size_px="400" rot_angle="0" ID="page-0" disp_duration_s="40" show_after_s="0" title="Page the first">
 
-<base:document xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:base='PWS_Base' xsi:schemaLocation='PWS_Base https://raw.githubusercontent.com/super-cow-powers/sweng_21_PWS/master/PWS.xsd'>
-	<base:page x_orig="0" y_orig="0" z_ind="0" x_size_px="400" y_size_px="400" rot_angle="0" ID="page-0" disp_duration_s="40" show_after_s="0" title="">
-		
 		<base:shape x_orig="0" y_orig="0" z_ind="0" x_size_px="50" y_size_px="50" rot_angle="0" ID="circ-0" disp_duration_s="10" show_after_s="5" type="circle">
+			<base:text>
+				<base:font bold="true">
+					This is some bold text and a
+					<base:href target="https://www.youtube.com/watch?v=dQw4w9WgXcQ" type="external">link</base:href>
+					to the web.
+				</base:font>
+				<base:font underscore="true">This text is underlined</base:font>
+				This text is plain.
+			</base:text>
+		</base:shape>
+		<base:shape x_orig="0" y_orig="0" z_ind="2" x_size_px="25" y_size_px="25" rot_angle="0" ID="circ-2" disp_duration_s="10" show_after_s="5" type="circle">
 			<base:text>
 				<base:font bold="true">
 					This is some bold text and a
@@ -31,8 +37,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
 			</base:text>
 		</base:shape>
 		<base:image include_source="./pic.png" x_orig="40" y_orig="40" z_ind="0" x_size_px="50" y_size_px="50" rot_angle="45" ID="im0" disp_duration_s="40" show_after_s="0" />
+
+		<ext:cool_element>This is my cool extension element, with a string in it</ext:cool_element>
 	</base:page>
-	<base:page x_orig="0" y_orig="0" z_ind="0" x_size_px="400" y_size_px="400" rot_angle="0" ID="page-1" disp_duration_s="40" show_after_s="0" title="">
+	
+	<base:page x_orig="0" y_orig="0" z_ind="0" x_size_px="400" y_size_px="400" rot_angle="0" ID="page-1" disp_duration_s="40" show_after_s="0" title="Page the second">
 		<base:image include_source="./pic2.png" x_orig="0" y_orig="0" z_ind="0" x_size_px="400" y_size_px="400" ID="im1" />
 	</base:page>
 </base:document>

@@ -86,7 +86,7 @@
       </xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:any minOccurs="0" />
+			<xsd:any namespace="PWS_Exts" minOccurs="0" maxOccurs="unbounded" />
 		</xsd:sequence>
 		<xsd:attribute name="width" type="xsd:double" />
 		<xsd:attribute name="dash-style" type="xsd:string">
@@ -144,7 +144,7 @@
 								</xsd:simpleContent>
 							</xsd:complexType>
 						</xsd:element>
-						<xsd:any minOccurs="0"/>
+						<xsd:any namespace="PWS_Exts" minOccurs="0" maxOccurs="unbounded"/>
 					</xsd:sequence>
 					<xsd:attribute name="underscore" type="xsd:boolean" use="optional" />
 					<xsd:attribute name="italic" type="xsd:boolean" use="optional" />
@@ -154,7 +154,7 @@
 					<xsd:attribute name="colour" type="base:colourType" use="optional" />
 				</xsd:complexType>
 			</xsd:element>
-			<xsd:any minOccurs="0" />
+			<xsd:any namespace="PWS_Exts" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attribute name="include_source" type="xsd:anyURI" use="optional" />
 		<xsd:anyAttribute />
@@ -175,7 +175,7 @@
 							</xsd:sequence>
 						</xsd:complexType>
 					</xsd:element>
-					<xsd:any minOccurs="0" maxOccurs="unbounded" />
+					<xsd:any minOccurs="0" maxOccurs="unbounded" namespace="PWS_Exts"/>
 				</xsd:sequence>
 				
 			</xsd:extension>
@@ -199,7 +199,7 @@
 							<xsd:attributeGroup ref="base:hrefAttrs" />
 						</xsd:complexType>
 					</xsd:element>
-					<xsd:any minOccurs="0" maxOccurs="unbounded" />
+					<xsd:any minOccurs="0" maxOccurs="unbounded" namespace="PWS_Exts"/>
 				</xsd:sequence>
 
 				<xsd:attribute name="x_end" type="xsd:double" use="optional" />
@@ -230,7 +230,7 @@
 		<xsd:complexContent>
 		  <xsd:extension base="base:visualType">
 		    <xsd:sequence>
-		      <xsd:any minOccurs="0" maxOccurs="unbounded" />
+		      <xsd:any minOccurs="0" maxOccurs="unbounded" namespace="PWS_Exts" />
 		    </xsd:sequence>
 				<xsd:attribute name="include_source" type="xsd:anyURI" />
 				<xsd:attribute name="display_player" type="xsd:boolean" use="optional" />
@@ -261,7 +261,7 @@
 		<xsd:complexContent>
 		  <xsd:extension base="base:visualType">
 		    <xsd:sequence>
-		      <xsd:any minOccurs="0" maxOccurs="unbounded" />
+		      <xsd:any minOccurs="0" maxOccurs="unbounded" namespace="PWS_Exts" />
 		    </xsd:sequence>
 			  <xsd:attribute name="include_source" type="xsd:anyURI" />
 			</xsd:extension>
@@ -282,7 +282,7 @@
 						<xsd:element name="image" type="base:imageType" minOccurs="0" maxOccurs="unbounded"/>
 						<xsd:element name="playable" type="base:playableType" minOccurs="0" maxOccurs="unbounded"/>
 						<xsd:element name="table" type="base:tableType" minOccurs="0" maxOccurs="unbounded"/>
-						<xsd:any minOccurs="0" maxOccurs="unbounded" />
+						<xsd:any minOccurs="0" maxOccurs="unbounded" namespace="PWS_Exts"/>
 				</xsd:sequence>
 				<xsd:attribute name="title" type="xsd:string" />
 				<xsd:anyAttribute />
@@ -300,7 +300,7 @@
 		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element name="page" minOccurs="0" maxOccurs="unbounded" type="base:pageType" />
-				<xsd:any minOccurs="0" maxOccurs="unbounded" />
+				<xsd:any minOccurs="0" maxOccurs="unbounded" namespace="PWS_Exts"/>
 			</xsd:sequence>
 			<xsd:attributeGroup ref="base:metadataAttrs" />
 			<xsd:anyAttribute />
