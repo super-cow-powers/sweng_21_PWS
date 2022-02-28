@@ -278,10 +278,10 @@
 		<xsd:complexContent>
 			<xsd:extension base="base:visualType">
 				<xsd:sequence>
-						<xsd:element name="shape" type="base:shapeType" minOccurs="0"/>
-						<xsd:element name="image" type="base:imageType" minOccurs="0"/>
-						<xsd:element name="playable" type="base:playableType" minOccurs="0"/>
-						<xsd:element name="table" type="base:tableType" minOccurs="0"/>
+						<xsd:element name="shape" type="base:shapeType" minOccurs="0" maxOccurs="unbounded"/>
+						<xsd:element name="image" type="base:imageType" minOccurs="0" maxOccurs="unbounded"/>
+						<xsd:element name="playable" type="base:playableType" minOccurs="0" maxOccurs="unbounded"/>
+						<xsd:element name="table" type="base:tableType" minOccurs="0" maxOccurs="unbounded"/>
 						<xsd:any minOccurs="0" maxOccurs="unbounded" />
 				</xsd:sequence>
 				<xsd:attribute name="title" type="xsd:string" />
