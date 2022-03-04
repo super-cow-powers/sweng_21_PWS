@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<base:document xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:ext='PWS_Exts' xmlns:base='PWS_Base' xsi:schemaLocation='PWS_Base https://raw.githubusercontent.com/super-cow-powers/sweng_21_PWS/master/PWS.xsd PWS_Exts https://raw.githubusercontent.com/super-cow-powers/sweng_21_PWS/master/my_exts.xsd'>
+<base:document xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:ext='http://PWS_Exts' xmlns:base='http://PWS_Base' xsi:schemaLocation='http://PWS_Base https://raw.githubusercontent.com/super-cow-powers/sweng_21_PWS/master/PWS.xsd http://PWS_Exts https://raw.githubusercontent.com/super-cow-powers/sweng_21_PWS/master/my_exts.xsd'>
 	<base:page x_orig="0" y_orig="0" z_ind="0" x_size_px="400" y_size_px="400" rot_angle="0" ID="page-0" disp_duration_s="40" show_after_s="0" title="Page the first">
 
 		<base:shape x_orig="0" y_orig="0" z_ind="0" x_size_px="50" y_size_px="50" rot_angle="0" ID="circ-0" disp_duration_s="10" show_after_s="5" type="circle">
