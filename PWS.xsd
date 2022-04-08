@@ -277,13 +277,13 @@
 
 		<xsd:complexContent>
 			<xsd:extension base="base:visualType">
-				<xsd:sequence>
+				<xsd:choice maxOccurs="unbounded" minOccurs="0">
 						<xsd:element name="shape" type="base:shapeType" minOccurs="0" maxOccurs="unbounded"/>
 						<xsd:element name="image" type="base:imageType" minOccurs="0" maxOccurs="unbounded"/>
 						<xsd:element name="playable" type="base:playableType" minOccurs="0" maxOccurs="unbounded"/>
 						<xsd:element name="table" type="base:tableType" minOccurs="0" maxOccurs="unbounded"/>
 						<xsd:any minOccurs="0" maxOccurs="unbounded" namespace="PWS_Exts"/>
-				</xsd:sequence>
+				</xsd:choice>
 				<xsd:attribute name="title" type="xsd:string" />
 				<xsd:anyAttribute />
 			</xsd:extension>
